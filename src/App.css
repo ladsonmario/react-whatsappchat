@@ -1,38 +1,91 @@
-.App {
-  text-align: center;
+* {
+    box-sizing: border-box;  
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+body {
+    padding: 0;
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, 'sans-serif';    
+    background-color: #F9F7F7;   
+    overflow: hidden; 
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.window--app {
+    display: flex;
+    background-color: #DBE2EF;
+    height: 100vh;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.side--bar {
+    width: 35%;
+    max-width: 413px;
+    border-right: 1px solid #bdd3fc;
 }
 
-.App-link {
-  color: #61dafb;
+.side--bar header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;    
+    height: 60px;
+    padding: 0 5px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.side--bar header img {
+    width: 40px;
+    height: 40px;    
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.side--bar .header--buttons {
+    display: flex;    
+}
+
+.icon--container {
+    color: #3F72AF;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.search--area {
+    background-color: #d7deeb;
+    border-bottom: 1px solid #bdd3fc;
+    padding: 5px 15px;
+}
+
+.search--input {
+    display: flex;
+    align-items: center;
+    background-color: #F9F7F7;
+    border-radius: 20px;
+    height: 40px;
+    padding: 0 10px;
+}
+
+.search--input input {
+    flex: 1;
+    border: 0;
+    outline: 0;
+    background-color: transparent;
+    margin-left: 10px;
+}
+
+.chat--list {
+    height: 100%;
+    overflow-y: auto;
+    background-color: #ecf3fa;
+}
+
+.chat--list::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;    
+}
+
+.chat--list::-webkit-scrollbar-thumb {
+    background-color: rgba(4, 21, 255, 0.3);    
 }
