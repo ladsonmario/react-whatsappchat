@@ -5,6 +5,10 @@
     height: 70px;
 }
 
+.active {
+    background-color: #dfe6fd;
+}
+
 .chatListItem:hover {
     background-color: #f7faff;
 }

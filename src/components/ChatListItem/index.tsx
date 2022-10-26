@@ -1,12 +1,19 @@
 import './styles.css';
+import { ChatListType } from '../../types/types';
 
-export const ChatListItem = () => {
+type Props = {
+    onClick: () => void;
+    active: boolean;
+    data: ChatListType;
+}
+
+export const ChatListItem = ({ onClick, active, data }: Props) => {
     return (
-        <div className="chatListItem">
-            <img className="chatListItem--avatar" src="https://cdn.iconscout.com/icon/free/png-256/avatar-373-456325.png" alt="" />
+        <div className={`chatListItem ${active ? 'active' : ''}`} onClick={onClick}>
+            <img className="chatListItem--avatar" src={data.avatar} alt="" />
             <div className="chatListItem--lines">
                 <div className="chatListItem--line">
-                    <div className="chatListItem--name">Lad</div>
+                    <div className="chatListItem--name">{data.title}</div>
                     <div className="chatListItem--date">00:01</div>
                 </div>
                 <div className="chatListItem--line">
