@@ -1,7 +1,8 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { ChatListItem } from './components/ChatListItem';
 import { ChatIntro } from './components/ChatIntro';
 import { ChatWindow } from './components/ChatWindow';
+import { NewChat } from './components/NewChat';
 import * as T from './types/types';
 
 import DonutLargeIcon from '@mui/icons-material/DonutLarge';
@@ -17,21 +18,32 @@ function App() {
         { chatId: 4, title: 'Hinata', avatar: 'https://cdn.iconscout.com/icon/free/png-256/avatar-373-456325.png' }        
     ]);
     const [activeChat, setActiveChat] = useState<T.ActiveChatType>();
+    const [user, setUser] = useState<any>({
+        id: 1997,
+        avatar: 'https://cdn.iconscout.com/icon/free/png-256/avatar-373-456325.png',
+        name: 'Ladson'
+    });
+    const [newChat, setNewChat] = useState<boolean>(false);
 
-    const handleChatItemCLick = (index: number) => {
+    const handleChatItemClick = (index: number) => {
         setActiveChat(chatList[index]);
+    }
+
+    const handleNewChat = () => {
+        setNewChat(true);
     }
 
     return (
         <div className="window--app">
-            <div className="side--bar">
+            <NewChat show={newChat} setShow={setNewChat} user={user} chatList={chatList} />
+            <div className="side--bar">                
                 <header>
-                    <img src="https://cdn.iconscout.com/icon/free/png-256/avatar-373-456325.png" alt="" />
+                    <img src={user.avatar} alt="" />
                     <div className="header--buttons">                        
                         <div className="icon--container">
                             <DonutLargeIcon />
                         </div>   
-                        <div className="icon--container">
+                        <div className="icon--container" onClick={handleNewChat}>
                             <ChatIcon />
                         </div> 
                         <div className="icon--container">
@@ -49,13 +61,13 @@ function App() {
                 </div>
                 <div className="chat--list">
                     {chatList.map((item, index) => (
-                       <ChatListItem key={index} data={item} onClick={() => handleChatItemCLick(index)} active={activeChat?.chatId === chatList[index].chatId} /> 
+                       <ChatListItem key={index} data={item} onClick={() => handleChatItemClick(index)} active={activeChat?.chatId === chatList[index].chatId} /> 
                     ))}
                 </div>
             </div>
             <div className="content--area">
                 {activeChat?.chatId !== undefined &&
-                    <ChatWindow />
+                    <ChatWindow user={user} />
                 } 
                 {activeChat?.chatId === undefined &&
                     <ChatIntro />               

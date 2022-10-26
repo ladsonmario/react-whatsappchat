@@ -27,7 +27,7 @@
 
 .chat--window--header--info div {
     font-size: 17px;
-    color: #112D4E
+    color: #112D4E;
 }
 
 .chat--window--header--buttons {
@@ -43,6 +43,15 @@
     background-image: url('/public/images/bg2.png');
     background-position: center;
     background-size: contain;
+    padding: 20px 30px;
+}
+.chat--window--body::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;    
+}
+
+.chat--window--body::-webkit-scrollbar-thumb {
+    background-color: rgba(4, 21, 255, 0.3);    
 }
 
 .chat--window--footer {

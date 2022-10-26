@@ -1,7 +1,8 @@
-import { ChangeEvent, useState, useEffect } from 'react';
+import { ChangeEvent, useState, useEffect, useRef } from 'react';
 import './styles.css';
 import EmojiPicker, { EmojiClickData } from 'emoji-picker-react';
-import SpeechRecognition, { useSpeechRecognition,SpeechRecognitionOptions } from 'react-speech-recognition';
+import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
+import { MessageItem } from '../MessageItem';
 
 import SearchIcon from '@mui/icons-material/Search';
 import AttachFileIcon from '@mui/icons-material/AttachFile';
@@ -11,7 +12,11 @@ import CloseIcon from '@mui/icons-material/Close';
 import SendIcon from '@mui/icons-material/Send';
 import MicIcon from '@mui/icons-material/Mic';
 
-export const ChatWindow = () => {    
+type Props = {
+    user: any;
+}
+export const ChatWindow = ({ user }: Props) => {    
+    const body = useRef() as React.MutableRefObject<HTMLDivElement>;
     const { transcript, listening, resetTranscript, browserSupportsSpeechRecognition } = useSpeechRecognition();
 
     if(!browserSupportsSpeechRecognition) {
@@ -19,15 +24,48 @@ export const ChatWindow = () => {
     }
 
     const [emojiOpen, setEmojiOpen] = useState<boolean>(false);
-    const [text, setText] = useState<string>(''); 
+    const [text, setText] = useState<string>('');
+    const [list, setList] = useState([
+        { author: 123, body: 'uehuheuehueheuheu asjdlaksj dlkasjd lkasjd lkasjlkdj as' },
+        { author: 1997, body: 'asjdlaksj dlkasjd lkasjd lkasjlkdj as' },
+        { author: 789, body: 'uehuheuehueheuheu asjdlaksj 321321321231 lkasjd lkasjlkdj as' },
+        { author: 789, body: 'uehuheuehueheuheu asjdlaksj 321321321231 lkasjd lkasjlkdj as' },
+        { author: 789, body: 'uehuheuehueheuheu asjdlaksj 321321321231 lkasjd lkasjlkdj as' },
+        { author: 789, body: 'uehuheuehueheuheu asjdlaksj 321321321231 lkasjd lkasjlkdj as' },
+        { author: 789, body: 'uehuheuehueheuheu asjdlaksj 321321321231 lkasjd lkasjlkdj as' },
+        { author: 789, body: 'uehuheuehueheuheu asjdlaksj 321321321231 lkasjd lkasjlkdj as' },
+        { author: 789, body: 'uehuheuehueheuheu asjdlaksj 321321321231 lkasjd lkasjlkdj as' },
+        { author: 789, body: 'uehuheuehueheuheu asjdlaksj 321321321231 lkasjd lkasjlkdj as' },
+        { author: 789, body: 'uehuheuehueheuheu asjdlaksj 321321321231 lkasjd lkasjlkdj as' },
+        { author: 789, body: 'uehuheuehueheuheu asjdlaksj 321321321231 lskasjd lkasjlkdj as' },
+        { author: 789, body: 'uehuheuehueheuheu asjdlaksj 321321321231 lkasjd lkasjlkdj as' },
+        { author: 789, body: 'uehuheuehueheuheu asjdlaksj 321321321231 lkasjd lkasjlkdj as' },
+        { author: 1997, body: 'asjdlaksj dlkasjd lkasjd lkasjlkdj as' },
+        { author: 1997, body: 'asjdlaksj dlkasjd lkasjd lkasjlkdj as' },
+        { author: 1997, body: 'asjdlaksj dlkasjd lkasjd lkasjlkdj as' },
+        { author: 1997, body: 'asjdlaksj dlkasjd lkasjd lkasjlkdj as' },
+        { author: 1997, body: 'asjdlaksj dlkasjd lkasjd lkasjlkdj as' },
+        { author: 1997, body: 'asjdlaksj dlkasjd lkasjd lkasjlkdj as' },
+        { author: 1997, body: 'asjdlaksj dlkasjd lkasjd lkasjlkdj as' },
+        { author: 1997, body: 'asjdlaksj dlkasjd lkasjd lkasjlkdj as' },
+        { author: 1997, body: 'asjdlaksj dlkasjd lkasjd lkasjlkdj as' },
+        { author: 1997, body: 'asjdlaksj dlkasjd lkasjd lkasjlkdj as' },        
+        { author: 1997, body: 'asjdlaksj dlkasjd lkasjd lkasjlkdj as' }
+    ]);
     
     useEffect(() => {
         if(!listening) {
-            resetTranscript();
-            setText(transcript);
             SpeechRecognition.stopListening();
+            resetTranscript();
+            setText(transcript);            
         }
     }, [listening]);
+
+    useEffect(() => {        
+        if(body.current.scrollHeight > body.current.offsetHeight) {
+            body.current.scrollTop = body.current.scrollHeight - body.current.offsetHeight; 
+        }
+    }, [list]);
 
     const handleChangeText = (e: ChangeEvent<HTMLInputElement>) => {
         setText(e.target.value);
@@ -73,8 +111,10 @@ export const ChatWindow = () => {
                 </div>
                 <div className="chat--window--header"></div>
             </div>
-            <div className="chat--window--body">
-
+            <div className="chat--window--body" ref={body}>
+                {list.map((item, index) => (
+                    <MessageItem key={index} data={item} user={user} />
+                ))}
             </div>
             <div className={`chat--window--emoji ${emojiOpen ? 'open' : ''}`}>
                <EmojiPicker width="100%" height="100%" previewConfig={{showPreview: false}} searchDisabled skinTonesDisabled onEmojiClick={handleEmojiClick} />
