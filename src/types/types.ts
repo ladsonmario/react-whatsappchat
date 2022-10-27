@@ -1,10 +1,23 @@
-export type ActiveChatType = {
-    chatId: number;
-}
 export type ChatListType = {
-    chatId: number,
+    chatId: string,
     title: string;
-    avatar: string;
+    image: string;
+    with: string;
+    lastMessage: string;
+    lastMessageDate: {
+        seconds: number;
+        nanoseconds: number;
+    }
+}
+
+export type ChatMessageType = {
+    author: string;
+    body: string;
+    type: 'text';
+    date: {
+        seconds: number;
+        nanoseconds: number;
+    }
 }
 
 export type UserType = {

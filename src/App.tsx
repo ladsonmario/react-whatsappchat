@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ChatListItem } from './components/ChatListItem';
 import { ChatIntro } from './components/ChatIntro';
 import { ChatWindow } from './components/ChatWindow';
@@ -14,13 +14,19 @@ import { useAPI } from './firebase/api';
 
 function App() {
     const [chatList, setChatList] = useState<T.ChatListType[]>([]);
-    const [activeChat, setActiveChat] = useState<T.ActiveChatType>();
+    const [activeChat, setActiveChat] = useState<T.ChatListType>();
     const [user, setUser] = useState<T.UserType>({
         id: 'kOuoOwkhuTYqjGqY2ZcMhZGK5p63',
         name: 'Ladson Mario',
         avatar: 'https://graph.facebook.com/5584417671645003/picture'
     });
     const [newChat, setNewChat] = useState<boolean>(false);
+
+    useEffect(() => {
+        if(user !== null) {
+            return useAPI.onChatList(user.id, setChatList);                        
+        }
+    }, [user]);
 
     const handleChatItemClick = (index: number) => {
         setActiveChat(chatList[index]);
@@ -79,7 +85,7 @@ function App() {
             </div>
             <div className="content--area">
                 {activeChat?.chatId !== undefined &&
-                    <ChatWindow user={user} />
+                    <ChatWindow user={user} data={activeChat} />
                 } 
                 {activeChat?.chatId === undefined &&
                     <ChatIntro />               

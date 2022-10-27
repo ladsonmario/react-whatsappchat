@@ -12,12 +12,14 @@ import EmojiEmotionsIcon from '@mui/icons-material/EmojiEmotions';
 import CloseIcon from '@mui/icons-material/Close';
 import SendIcon from '@mui/icons-material/Send';
 import MicIcon from '@mui/icons-material/Mic';
+import { useAPI } from '../../firebase/api';
 
 type Props = {
     user: T.UserType;
+    data: T.ChatListType;
 }
 
-export const ChatWindow = ({ user }: Props) => {    
+export const ChatWindow = ({ user, data }: Props) => {    
     const body = useRef() as React.MutableRefObject<HTMLDivElement>;
     const { transcript, listening, resetTranscript, browserSupportsSpeechRecognition } = useSpeechRecognition();
 
@@ -27,33 +29,13 @@ export const ChatWindow = ({ user }: Props) => {
 
     const [emojiOpen, setEmojiOpen] = useState<boolean>(false);
     const [text, setText] = useState<string>('');
-    const [list, setList] = useState([
-        { author: 123, body: 'uehuheuehueheuheu asjdlaksj dlkasjd lkasjd lkasjlkdj as' },
-        { author: 1997, body: 'asjdlaksj dlkasjd lkasjd lkasjlkdj as' },
-        { author: 789, body: 'uehuheuehueheuheu asjdlaksj 321321321231 lkasjd lkasjlkdj as' },
-        { author: 789, body: 'uehuheuehueheuheu asjdlaksj 321321321231 lkasjd lkasjlkdj as' },
-        { author: 789, body: 'uehuheuehueheuheu asjdlaksj 321321321231 lkasjd lkasjlkdj as' },
-        { author: 789, body: 'uehuheuehueheuheu asjdlaksj 321321321231 lkasjd lkasjlkdj as' },
-        { author: 789, body: 'uehuheuehueheuheu asjdlaksj 321321321231 lkasjd lkasjlkdj as' },
-        { author: 789, body: 'uehuheuehueheuheu asjdlaksj 321321321231 lkasjd lkasjlkdj as' },
-        { author: 789, body: 'uehuheuehueheuheu asjdlaksj 321321321231 lkasjd lkasjlkdj as' },
-        { author: 789, body: 'uehuheuehueheuheu asjdlaksj 321321321231 lkasjd lkasjlkdj as' },
-        { author: 789, body: 'uehuheuehueheuheu asjdlaksj 321321321231 lkasjd lkasjlkdj as' },
-        { author: 789, body: 'uehuheuehueheuheu asjdlaksj 321321321231 lskasjd lkasjlkdj as' },
-        { author: 789, body: 'uehuheuehueheuheu asjdlaksj 321321321231 lkasjd lkasjlkdj as' },
-        { author: 789, body: 'uehuheuehueheuheu asjdlaksj 321321321231 lkasjd lkasjlkdj as' },
-        { author: 1997, body: 'asjdlaksj dlkasjd lkasjd lkasjlkdj as' },
-        { author: 1997, body: 'asjdlaksj dlkasjd lkasjd lkasjlkdj as' },
-        { author: 1997, body: 'asjdlaksj dlkasjd lkasjd lkasjlkdj as' },
-        { author: 1997, body: 'asjdlaksj dlkasjd lkasjd lkasjlkdj as' },
-        { author: 1997, body: 'asjdlaksj dlkasjd lkasjd lkasjlkdj as' },
-        { author: 1997, body: 'asjdlaksj dlkasjd lkasjd lkasjlkdj as' },
-        { author: 1997, body: 'asjdlaksj dlkasjd lkasjd lkasjlkdj as' },
-        { author: 1997, body: 'asjdlaksj dlkasjd lkasjd lkasjlkdj as' },
-        { author: 1997, body: 'asjdlaksj dlkasjd lkasjd lkasjlkdj as' },
-        { author: 1997, body: 'asjdlaksj dlkasjd lkasjd lkasjlkdj as' },        
-        { author: 1997, body: 'asjdlaksj dlkasjd lkasjd lkasjlkdj as' }
-    ]);
+    const [list, setList] = useState<T.ChatMessageType[]>([]);
+    const [users, setUsers] = useState<string[]>([]);
+
+    useEffect(() => {
+        setList([]);
+        return useAPI.onChatContent(data.chatId, setList, setUsers);
+    }, [data.chatId]);
     
     useEffect(() => {
         if(!listening) {
@@ -89,16 +71,26 @@ export const ChatWindow = ({ user }: Props) => {
         SpeechRecognition.startListening();           
     }
 
-    const handleSendClick = () => {
+    const handleKeyEnter = (e: React.KeyboardEvent) => {
+        if(e.key === 'Enter') {
+            handleSendClick();
+        }
+    }
 
+    const handleSendClick = async () => {
+        if(text !== '') {
+            await useAPI.sendMessage(data, user.id, 'text', text, users);
+            setText('');
+            setEmojiOpen(false);
+        }
     }
 
     return (
         <div className="chat--window">
             <div className="chat--window--header">
                 <div className="chat--window--header--info">
-                    <img src="https://cdn.iconscout.com/icon/free/png-256/avatar-373-456325.png" alt="" />
-                    <div>Lad</div>
+                    <img src={data.image} alt="" />
+                    <div>{data.title}</div>
                 </div>
                 <div className="chat--window--header--buttons">
                     <div className="icon--container">
@@ -131,7 +123,7 @@ export const ChatWindow = ({ user }: Props) => {
                     </div>
                 </div>
                 <div className="chat--window--footer--input">
-                    <input type="text" placeholder="Digite uma mensagem" value={text} onChange={handleChangeText} />
+                    <input type="text" placeholder="Digite uma mensagem" value={text} onChange={handleChangeText} onKeyUp={handleKeyEnter} />
                 </div>
                 <div className="chat--window--footer--pos">
                     {text === '' &&

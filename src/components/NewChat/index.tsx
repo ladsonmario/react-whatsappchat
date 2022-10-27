@@ -27,6 +27,11 @@ export const NewChat = ({ show, setShow, user, chatList }: Props) => {
         setShow(false);
     }
 
+    const handleNewChat = async (user2: T.UserType) => {
+        await useAPI.addNewChat(user, user2);
+        setShow(false);
+    }
+
     return (
         <div className={`new--chat ${show ? '' : 'new--chat--close'}`}>
             <div className="new--chat--header">
@@ -37,7 +42,7 @@ export const NewChat = ({ show, setShow, user, chatList }: Props) => {
             </div>
             <div className="new--chat--list">
                 {list.map((item, index) => (
-                    <div className="new--chat--item" key={index}>
+                    <div className="new--chat--item" key={index} onClick={() => handleNewChat(item)}>
                         <img src={item.avatar} alt="" />
                         <div className="new--chat--item--name">{item.name}</div>
                     </div>
