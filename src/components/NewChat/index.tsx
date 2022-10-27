@@ -1,21 +1,27 @@
-import { Dispatch, useState } from 'react';
+import { useEffect, useState } from 'react';
 import './styles.css';
+import * as T from '../../types/types';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { useAPI } from '../../firebase/api';
 
 type Props = {
     show: boolean; 
     setShow: React.Dispatch<boolean>;
-    user: any; 
+    user: T.UserType; 
     chatList: any;
 }
 
 export const NewChat = ({ show, setShow, user, chatList }: Props) => {    
-    const [list, setList] = useState([
-        {id: 123, avatar: 'https://cdn.iconscout.com/icon/free/png-256/avatar-373-456325.png', name: 'Lads' },
-        {id: 13, avatar: 'https://cdn.iconscout.com/icon/free/png-256/avatar-373-456325.png', name: 'Lads' },
-        {id: 12, avatar: 'https://cdn.iconscout.com/icon/free/png-256/avatar-373-456325.png', name: 'Lads' },
-        {id: 23, avatar: 'https://cdn.iconscout.com/icon/free/png-256/avatar-373-456325.png', name: 'Lads' }
-    ]);
+    const [list, setList] = useState<T.UserType[]>([]);
+
+    useEffect(() => {
+        if(user !== null) {
+            ( async () => {
+                const result: T.UserType[] = await useAPI.getContactList(user.id);
+                setList(result);
+            })();
+        }
+    }, [user]);
 
     const handleShow = () => {
         setShow(false);

@@ -1,5 +1,6 @@
 import { ChangeEvent, useState, useEffect, useRef } from 'react';
 import './styles.css';
+import * as T from '../../types/types';
 import EmojiPicker, { EmojiClickData } from 'emoji-picker-react';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 import { MessageItem } from '../MessageItem';
@@ -13,8 +14,9 @@ import SendIcon from '@mui/icons-material/Send';
 import MicIcon from '@mui/icons-material/Mic';
 
 type Props = {
-    user: any;
+    user: T.UserType;
 }
+
 export const ChatWindow = ({ user }: Props) => {    
     const body = useRef() as React.MutableRefObject<HTMLDivElement>;
     const { transcript, listening, resetTranscript, browserSupportsSpeechRecognition } = useSpeechRecognition();

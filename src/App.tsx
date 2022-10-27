@@ -9,19 +9,16 @@ import DonutLargeIcon from '@mui/icons-material/DonutLarge';
 import ChatIcon from '@mui/icons-material/Chat';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import SearchIcon from '@mui/icons-material/Search';
+import { Login } from './components/Login';
+import { useAPI } from './firebase/api';
 
 function App() {
-    const [chatList, setChatList] = useState<T.ChatListType[]>([
-        { chatId: 1, title: 'Meu dengo', avatar: 'https://cdn.iconscout.com/icon/free/png-256/avatar-373-456325.png' },
-        { chatId: 2, title: 'Lad', avatar: 'https://cdn.iconscout.com/icon/free/png-256/avatar-373-456325.png' },
-        { chatId: 3, title: 'Naruto', avatar: 'https://cdn.iconscout.com/icon/free/png-256/avatar-373-456325.png' },
-        { chatId: 4, title: 'Hinata', avatar: 'https://cdn.iconscout.com/icon/free/png-256/avatar-373-456325.png' }        
-    ]);
+    const [chatList, setChatList] = useState<T.ChatListType[]>([]);
     const [activeChat, setActiveChat] = useState<T.ActiveChatType>();
-    const [user, setUser] = useState<any>({
-        id: 1997,
-        avatar: 'https://cdn.iconscout.com/icon/free/png-256/avatar-373-456325.png',
-        name: 'Ladson'
+    const [user, setUser] = useState<T.UserType>({
+        id: 'kOuoOwkhuTYqjGqY2ZcMhZGK5p63',
+        name: 'Ladson Mario',
+        avatar: 'https://graph.facebook.com/5584417671645003/picture'
     });
     const [newChat, setNewChat] = useState<boolean>(false);
 
@@ -31,6 +28,21 @@ function App() {
 
     const handleNewChat = () => {
         setNewChat(true);
+    }
+
+    const handleLoginData = async (user: T.UserLoginType) => {
+        const newUser: T.UserType = {
+            id: user.uid,
+            name: user.displayName,
+            avatar: user.photoURL
+        }
+
+        await useAPI.addUser(newUser);
+        setUser(newUser);
+    }
+
+    if(!user) {
+        return ( <Login onReceive={handleLoginData} /> );
     }
 
     return (
