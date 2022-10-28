@@ -109,3 +109,12 @@ aside.EmojiPickerReact.epr-main {
 aside.EmojiPickerReact li.epr-emoji-category > .epr-emoji-category-label {
     background-color: transparent; 
 }
+.back--mobile {
+    display: none;
+}
+
+@media (max-width: 600px) {
+    .back--mobile {
+        display: flex;
+    }
+}

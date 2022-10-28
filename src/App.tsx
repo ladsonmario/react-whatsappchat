@@ -17,6 +17,7 @@ function App() {
     const [activeChat, setActiveChat] = useState<T.ChatListType>();
     const [user, setUser] = useState<T.UserType>();
     const [newChat, setNewChat] = useState<boolean>(false);
+    const [mobile, setMobile] = useState<boolean>(false);
 
     useEffect(() => {
         if(user) {
@@ -24,8 +25,9 @@ function App() {
         }
     }, [user]);
 
-    const handleChatItemClick = (index: number) => {
+    const handleChatItemClick = (index: number) => {        
         setActiveChat(chatList[index]);
+        setMobile(true);
     }
 
     const handleNewChat = () => {
@@ -49,8 +51,8 @@ function App() {
 
     return (
         <div className="window--app">
-            <NewChat show={newChat} setShow={setNewChat} user={user} chatList={chatList} />
-            <div className="side--bar">                
+            <NewChat show={newChat} setShow={setNewChat} user={user} chatList={chatList} startChat={setActiveChat} />
+            <div className={`side--bar ${mobile? 'top' : ''}`}>                
                 <header>
                     <img src={user.avatar} alt="" />
                     <div className="header--buttons">                        
@@ -79,9 +81,9 @@ function App() {
                     ))}
                 </div>
             </div>
-            <div className="content--area">
+            <div className={`content--area ${mobile? 'bottom' : ''}`}>
                 {activeChat?.chatId !== undefined &&
-                    <ChatWindow user={user} data={activeChat} />
+                    <ChatWindow user={user} data={activeChat} mobile={setMobile} onchat={mobile} />
                 } 
                 {activeChat?.chatId === undefined &&
                     <ChatIntro />               

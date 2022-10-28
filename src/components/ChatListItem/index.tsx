@@ -12,7 +12,7 @@ export const ChatListItem = ({ onClick, active, data }: Props) => {
     const [time, setTime] = useState<string>('');
     
     useEffect(() => {
-        if(data.lastMessageDate.seconds) {
+        if(data.lastMessageDate?.seconds) {
             const d: Date = new Date(data.lastMessageDate.seconds * 1000);
             const h: number | string = d.getHours() < 10 ? `0${d.getHours()}` : d.getHours();
             const m: number | string = d.getMinutes() < 10 ? `0${d.getMinutes()}` : d.getMinutes();

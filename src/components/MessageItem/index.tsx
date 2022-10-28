@@ -10,7 +10,7 @@ export const MessageItem = ({ data, user }: Props) => {
     const [time, setTime] = useState<string>('');
     
     useEffect(() => {
-        if(data.date.seconds) {
+        if(data.date?.seconds) {
             const d: Date = new Date(data.date.seconds * 1000);
             const h: number | string = d.getHours() < 10 ? `0${d.getHours()}` : d.getHours();
             const m: number | string = d.getMinutes() < 10 ? `0${d.getMinutes()}` : d.getMinutes();

@@ -12,14 +12,17 @@ import EmojiEmotionsIcon from '@mui/icons-material/EmojiEmotions';
 import CloseIcon from '@mui/icons-material/Close';
 import SendIcon from '@mui/icons-material/Send';
 import MicIcon from '@mui/icons-material/Mic';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useAPI } from '../../firebase/api';
 
 type Props = {
     user: T.UserType;
     data: T.ChatListType;
+    mobile: React.Dispatch<boolean>;
+    onchat: boolean;
 }
 
-export const ChatWindow = ({ user, data }: Props) => {    
+export const ChatWindow = ({ user, data, mobile, onchat }: Props) => {    
     const body = useRef() as React.MutableRefObject<HTMLDivElement>;
     const { transcript, listening, resetTranscript, browserSupportsSpeechRecognition } = useSpeechRecognition();
 
@@ -45,11 +48,11 @@ export const ChatWindow = ({ user, data }: Props) => {
         }
     }, [listening]);
 
-    useEffect(() => {        
+    useEffect(() => {                
         if(body.current.scrollHeight > body.current.offsetHeight) {
-            body.current.scrollTop = body.current.scrollHeight - body.current.offsetHeight; 
+            body.current.scroll(0, body.current.scrollHeight - body.current.offsetHeight);            
         }
-    }, [list]);
+    }, [list, users, onchat]);
 
     const handleChangeText = (e: ChangeEvent<HTMLInputElement>) => {
         setText(e.target.value);
@@ -85,10 +88,17 @@ export const ChatWindow = ({ user, data }: Props) => {
         }
     }
 
+    const handleSetMobile = () => {
+        mobile(false);
+    }
+
     return (
         <div className="chat--window">
             <div className="chat--window--header">
                 <div className="chat--window--header--info">
+                    <div className="icon--container back--mobile" onClick={handleSetMobile}>
+                        <ArrowBackIcon />
+                    </div>
                     <img src={data.image} alt="" />
                     <div>{data.title}</div>
                 </div>

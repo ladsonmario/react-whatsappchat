@@ -3,8 +3,8 @@ export type ChatListType = {
     title: string;
     image: string;
     with: string;
-    lastMessage: string;
-    lastMessageDate: {
+    lastMessage?: string;
+    lastMessageDate?: {
         seconds: number;
         nanoseconds: number;
     }
@@ -14,7 +14,7 @@ export type ChatMessageType = {
     author: string;
     body: string;
     type: 'text';
-    date: {
+    date?: {
         seconds: number;
         nanoseconds: number;
     }

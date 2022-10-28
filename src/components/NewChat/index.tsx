@@ -8,10 +8,11 @@ type Props = {
     show: boolean; 
     setShow: React.Dispatch<boolean>;
     user: T.UserType; 
-    chatList: any;
+    chatList: T.ChatListType[];
+    startChat: React.Dispatch<T.ChatListType>;
 }
 
-export const NewChat = ({ show, setShow, user, chatList }: Props) => {    
+export const NewChat = ({ show, setShow, user, chatList, startChat }: Props) => {    
     const [list, setList] = useState<T.UserType[]>([]);
 
     useEffect(() => {
@@ -28,7 +29,15 @@ export const NewChat = ({ show, setShow, user, chatList }: Props) => {
     }
 
     const handleNewChat = async (user2: T.UserType) => {
-        await useAPI.addNewChat(user, user2);
+        for(let i in chatList) {
+            if(chatList[i].with !== user2.id) {
+                await useAPI.addNewChat(user, user2);
+            } else {                
+                const index: number = chatList.findIndex(item => item.with === user2.id);                
+                startChat(chatList[index]);
+            }
+        }
+        
         setShow(false);
     }
 

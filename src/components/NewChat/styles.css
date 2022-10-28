@@ -9,7 +9,7 @@
     flex-direction: column;
     border-right: 1px solid #bdd3fc;
     background-color: #eef4fd;
-    transition: all ease .5s;
+    transition: all ease .5s;    
 }
 .new--chat--close {
     left: -416px;
@@ -68,4 +68,11 @@
 .new--chat--item--name {
     font-size: 17px;
     color: #112D4E;
+}
+
+@media (max-width: 600px) {
+    .new--chat {
+        width: 100%;
+        z-index: 2;
+    }
 }
