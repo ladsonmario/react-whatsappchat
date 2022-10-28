@@ -15,7 +15,7 @@ export const NewChat = ({ show, setShow, user, chatList }: Props) => {
     const [list, setList] = useState<T.UserType[]>([]);
 
     useEffect(() => {
-        if(user !== null) {
+        if(user) {
             ( async () => {
                 const result: T.UserType[] = await useAPI.getContactList(user.id);
                 setList(result);

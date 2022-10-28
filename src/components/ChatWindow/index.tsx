@@ -77,9 +77,9 @@ export const ChatWindow = ({ user, data }: Props) => {
         }
     }
 
-    const handleSendClick = async () => {
+    const handleSendClick = () => {
         if(text !== '') {
-            await useAPI.sendMessage(data, user.id, 'text', text, users);
+            useAPI.sendMessage(data, user.id, 'text', text, users);
             setText('');
             setEmojiOpen(false);
         }

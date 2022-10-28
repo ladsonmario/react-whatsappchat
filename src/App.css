@@ -8,13 +8,12 @@ body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, 'sans-serif';    
     background-color: #F9F7F7;   
     overflow: hidden; 
-    height: 100vh;
 }
 
 .window--app {
     display: flex;
     background-color: #DBE2EF;
-    height: 100vh;
+    height: 100vh;    
 }
 
 .side--bar {
@@ -93,5 +92,5 @@ body {
 }
 
 .content--area {
-    flex: 1;
+    width: 100%;
 }

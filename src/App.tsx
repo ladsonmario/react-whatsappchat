@@ -15,15 +15,11 @@ import { useAPI } from './firebase/api';
 function App() {
     const [chatList, setChatList] = useState<T.ChatListType[]>([]);
     const [activeChat, setActiveChat] = useState<T.ChatListType>();
-    const [user, setUser] = useState<T.UserType>({
-        id: 'kOuoOwkhuTYqjGqY2ZcMhZGK5p63',
-        name: 'Ladson Mario',
-        avatar: 'https://graph.facebook.com/5584417671645003/picture'
-    });
+    const [user, setUser] = useState<T.UserType>();
     const [newChat, setNewChat] = useState<boolean>(false);
 
     useEffect(() => {
-        if(user !== null) {
+        if(user) {
             return useAPI.onChatList(user.id, setChatList);                        
         }
     }, [user]);

@@ -66,7 +66,24 @@ export const useAPI = {
             if(doc.exists) {
                 const data = doc.data() as firebase.firestore.DocumentData;
                 if(data.chats) {
-                    setChatList(data.chats);
+                    const chats: T.ChatListType[] = [...data.chats];
+
+                    chats.sort((a:T.ChatListType, b:T.ChatListType) => {
+                        if(!a.lastMessageDate) {
+                            return -1;
+                        }
+                        if(!b.lastMessageDate) {
+                            return -1;
+                        }
+                        
+                        if(a.lastMessageDate < b.lastMessageDate) {
+                            return 1;
+                        } else {
+                            return -1;
+                        }                         
+                    });
+
+                    setChatList(chats);
                 }
             }
         });
