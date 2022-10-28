@@ -51,7 +51,7 @@ function App() {
 
     return (
         <div className="window--app">
-            <NewChat show={newChat} setShow={setNewChat} user={user} chatList={chatList} startChat={setActiveChat} />
+            <NewChat show={newChat} setShow={setNewChat} user={user} chatList={chatList} startChat={setActiveChat} mobile={setMobile} />
             <div className={`side--bar ${mobile? 'top' : ''}`}>                
                 <header>
                     <img src={user.avatar} alt="" />

@@ -10,9 +10,10 @@ type Props = {
     user: T.UserType; 
     chatList: T.ChatListType[];
     startChat: React.Dispatch<T.ChatListType>;
+    mobile: React.Dispatch<boolean>;
 }
 
-export const NewChat = ({ show, setShow, user, chatList, startChat }: Props) => {    
+export const NewChat = ({ show, setShow, user, chatList, startChat, mobile }: Props) => {    
     const [list, setList] = useState<T.UserType[]>([]);
 
     useEffect(() => {
@@ -32,9 +33,10 @@ export const NewChat = ({ show, setShow, user, chatList, startChat }: Props) => 
         for(let i in chatList) {
             if(chatList[i].with !== user2.id) {
                 await useAPI.addNewChat(user, user2);
-            } else {                
+            } else {                     
                 const index: number = chatList.findIndex(item => item.with === user2.id);                
-                startChat(chatList[index]);
+                startChat(chatList[index]);  
+                mobile(true);
             }
         }
         
