@@ -6,8 +6,7 @@ body {
     padding: 0;
     margin: 0;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, 'sans-serif';    
-    background-color: #F9F7F7; 
-    overflow: hidden;
+    background-color: #F9F7F7;     
     min-height: 100vh; 
     height: 100%;            
 }
@@ -79,7 +78,7 @@ body {
 }
 
 .chat--list {
-    height: 100%;
+    height: calc(100% - 60px - 51px) !important;
     overflow-y: auto;
     background-color: #f7f7f7;
 }
@@ -103,26 +102,21 @@ body {
         height: 100%;        
     }
     .side--bar {
-        transition: all ease .5s;
-        position: relative;        
+        transition: all ease .3s;            
         height: 100vh;
         width: 100%;
-        max-width: 100%; 
-        top: 0;                    
+        max-width: 100%;         
+        overflow: hidden;                   
     }    
     .content--area {
-        transition: all ease .5s;
-        position: relative;        
-        height: 100vh;
-        bottom: 0;
+        transition: all ease .3s;              
+        height: 0;        
+        overflow: hidden;
     }
     .top {
-        top: 100vh;
+        height: 0;
     }
     .bottom {
-        bottom: 100vh;       
-    }
-    .chat--list {
-        height: auto;
-    }
+        height: 100vh;       
+    }      
 }
