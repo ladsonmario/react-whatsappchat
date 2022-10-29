@@ -7,7 +7,9 @@ body {
     margin: 0;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, 'sans-serif';    
     background-color: #F9F7F7; 
-    overflow: hidden;              
+    overflow: hidden;
+    min-height: 100vh; 
+    height: 100%;            
 }
 
 .window--app {
