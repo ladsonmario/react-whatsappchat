@@ -1,23 +1,19 @@
 * {
     box-sizing: border-box;  
 }
-img {
-    object-fit: cover;
-}
 
 body {
     padding: 0;
     margin: 0;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, 'sans-serif';    
     background-color: #F9F7F7; 
-    overflow: hidden; 
-    height: 100vh;      
+    overflow: hidden;              
 }
 
 .window--app {
     display: flex;
-    background-color: #DBE2EF; 
-    height: 100vh;      
+    background-color: #DBE2EF;    
+    height: 100vh;
 }
 
 .side--bar {
@@ -99,10 +95,10 @@ body {
     width: 100%;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 600px) {    
     .window--app {
-        flex-direction: column;
-        height: auto;
+        flex-direction: column; 
+        height: 100%;        
     }
     .side--bar {
         transition: all ease .5s;
