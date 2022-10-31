@@ -28,7 +28,7 @@ export const useAPI = {
 
             if(item.id !== userId) {
                 list.push({
-                    id: data.id,
+                    id: item.id,
                     name: data.name,
                     avatar: data.avatar
                 });
