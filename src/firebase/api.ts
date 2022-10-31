@@ -43,7 +43,7 @@ export const useAPI = {
             users: [user.id, user2.id]
         });
 
-        db.collection('users').doc(user.id).update({
+        await db.collection('users').doc(user.id).update({
             chats: firebase.firestore.FieldValue.arrayUnion({
                 chatId: newChat.id,
                 title: user2.name,
@@ -52,7 +52,7 @@ export const useAPI = {
             })
         });
 
-        db.collection('users').doc(user2.id).update({
+        await db.collection('users').doc(user2.id).update({
             chats: firebase.firestore.FieldValue.arrayUnion({
                 chatId: newChat.id,
                 title: user.name,
