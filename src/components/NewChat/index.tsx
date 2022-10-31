@@ -30,15 +30,14 @@ export const NewChat = ({ show, setShow, user, chatList, startChat, mobile }: Pr
     }
 
     const handleNewChat = async (user2: T.UserType) => {
-        for(let i in chatList) {
-            if(chatList[i].with !== user2.id) {
-                await useAPI.addNewChat(user, user2);
-            } else {                     
-                const index: number = chatList.findIndex(item => item.with === user2.id);                
-                startChat(chatList[index]);  
-                mobile(true);
-            }
-        }
+        const index: number = chatList.findIndex(item => item.with === user2.id);
+        
+        if(index !== -1) {
+            startChat(chatList[index]);  
+            mobile(true);
+        } else {
+            await useAPI.addNewChat(user, user2);
+        }        
         
         setShow(false);
     }
