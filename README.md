@@ -11,6 +11,9 @@ Nesse projeto foi feito o uso das bibliotecas:
 ## Estilização
 Para estilização foi usado CSS tradicional.
 
+## Arquivo .env (variáveis de ambiente)
+O arquivo .env.example contém as variáveis necessárias para usar a aplicação. O valor dessas variáveis é gerado pelo próprio Firebase quando for criar um projeto.
+
 ## Projeto gerado em CRA
 
 ### Instalação
